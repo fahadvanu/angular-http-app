@@ -1,3 +1,13 @@
 <app-places-container title="Your Favorite Places">
-  <p>Todo...</p>
+  @if (isFetching() && !isError()) {
+    <p class="fallback-text">Fetching User places...</p>
+  }
+  @if (isError()) {
+    <p class="fallback-text">{{ isError() }}</p>
+  }
+  @if (places()) {
+    <app-places [places]="places()!" (selectPlace)="onSelectPlace($event)" />
+  } @else if (places()?.length === 0) {
+    <p class="fallback-text">Unfortunately, no places could be found.</p>
+  }
 </app-places-container>
